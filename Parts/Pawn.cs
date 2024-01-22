@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.PortableExecutable;
@@ -11,7 +10,7 @@ using JogoXadrez.board;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JogoXadrez.Parts {
-     class Pawn : Part {
+    class Pawn : Part {
 
 
         public Pawn(Tabuleiro tab, Color cor) : base(tab, cor) {
@@ -27,7 +26,7 @@ namespace JogoXadrez.Parts {
             return p != null && p.Color != Color;
         }
 
-        private bool Free (Position pos) {
+        private bool Free(Position pos) {
             return Tab.Part(pos) == null;
         }
 
@@ -36,7 +35,7 @@ namespace JogoXadrez.Parts {
             bool[,] mat = new bool[Tab.lines, Tab.columns];
             Position pos = new Position(0, 0);
 
-            if (Color == Color.Branca)  {
+            if (Color == Color.Branca) {
 
                 pos.setValue(Position.Line - 1, Position.Column);
                 if (Tab.validPosition(pos) && Free(pos)) {
@@ -46,52 +45,48 @@ namespace JogoXadrez.Parts {
                 pos.setValue(Position.Line - 2, Position.Column);
                 Position P2 = new Position(Position.Line - 1, Position.Column);
                 if (Tab.validPosition(P2) && Free(P2) && Tab.validPosition(pos)
-                    && Free(pos) && quantityMovement ==0){
+                    && Free(pos) && quantityMovement == 0) {
                     mat[pos.Line, pos.Column] = true;
                 }
 
-                pos.setValue(Position.Line - 1, Position.Column -1);
+                pos.setValue(Position.Line - 1, Position.Column - 1);
                 if (Tab.validPosition(pos) && existOponent(pos)) {
                     mat[pos.Line, pos.Column] = true;
                 }
 
-                pos.setValue(Position.Line - 1, Position.Column +1);
+                pos.setValue(Position.Line - 1, Position.Column + 1);
+                if (Tab.validPosition(pos) && existOponent(pos)) {
+                    mat[pos.Line, pos.Column] = true;
+                }
+            }
+            else {
+
+                pos.setValue(Position.Line + 1, Position.Column);
+                if (Tab.validPosition(pos) && Free(pos)) {
+                    mat[pos.Line, pos.Column] = true;
+                }
+
+                pos.setValue(Position.Line + 2, Position.Column);
+                Position P3 = new Position(Position.Line + 1, Position.Column);
+                if (Tab.validPosition(P3) && Free(P3) && Tab.validPosition(pos)
+                    && Free(pos) && quantityMovement == 0) {
+                    mat[pos.Line, pos.Column] = true;
+                }
+
+                pos.setValue(Position.Line + 1, Position.Column - 1);
                 if (Tab.validPosition(pos) && existOponent(pos)) {
                     mat[pos.Line, pos.Column] = true;
                 }
 
-                else {
-
-                    pos.setValue(Position.Line + 1, Position.Column);
-                    if (Tab.validPosition(pos) && Free(pos)) {
-                        mat[pos.Line, pos.Column] = true;
-                    }
-
-                    pos.setValue(Position.Line + 2, Position.Column);
-                    Position P3 = new Position(Position.Line + 1, Position.Column);
-                    if (Tab.validPosition(P3) && Free(P3) && Tab.validPosition(pos)
-                        && Free(pos) && quantityMovement == 0) {
-                        mat[pos.Line, pos.Column] = true;
-                    }
-                
-
-                    pos.setValue(Position.Line + 1, Position.Column - 1);
-                    if (Tab.validPosition(pos) && existOponent(pos)) {
-                        mat[pos.Line, pos.Column] = true;
-                    }
-
-                    pos.setValue(Position.Line + 1, Position.Column + 1);
-                    if (Tab.validPosition(pos) && existOponent(pos)) {
-                        mat[pos.Line, pos.Column] = true;
-                    }
+                pos.setValue(Position.Line + 1, Position.Column + 1);
+                if (Tab.validPosition(pos) && existOponent(pos)) {
+                    mat[pos.Line, pos.Column] = true;
                 }
-
-
             }
 
-
             return mat;
-
         }
+
     }
+
 }

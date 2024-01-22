@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\bin",
+    "\\bin\\Release",
+    "\\board",
+    "\\Parts"
   ],
-  "SelectedNode": "\\Program.cs",
+  "SelectedNode": "\\Parts\\Bishop.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -42,7 +42,7 @@ namespace JogoXadrez.board {
             }
 
             //#jogada roque pequeno
-            if(p is King && destiny.Column == origin.Column + 2) {
+            if (p is King && destiny.Column == origin.Column + 2) {
                 Position oringTower = new Position(origin.Line, origin.Column + 3);
                 Position destinyTower = new Position(origin.Line, origin.Column + 1);
                 Part T = Tab.removePart(oringTower);
@@ -117,7 +117,7 @@ namespace JogoXadrez.board {
                 Check = false;
             }
 
-            if (testCheckMate(Oponent(currentePlayer))){
+            if (testCheckMate(Oponent(currentePlayer))) {
                 Finished = true;
             }
 
@@ -255,7 +255,7 @@ namespace JogoXadrez.board {
             addNewParts('b', 1, (new Horse(Tab, Color.Branca)));
             addNewParts('c', 1, (new Bishop(Tab, Color.Branca)));
             addNewParts('d', 1, (new Queen(Tab, Color.Branca)));
-            addNewParts('e', 1, (new King(Tab, Color.Branca,this)));
+            addNewParts('e', 1, (new King(Tab, Color.Branca, this)));
             addNewParts('f', 1, (new Bishop(Tab, Color.Branca)));
             addNewParts('g', 1, (new Horse(Tab, Color.Branca)));
             addNewParts('h', 1, (new Tower(Tab, Color.Branca)));
@@ -274,7 +274,7 @@ namespace JogoXadrez.board {
             addNewParts('b', 8, (new Horse(Tab, Color.Amarela)));
             addNewParts('c', 8, (new Bishop(Tab, Color.Amarela)));
             addNewParts('d', 8, (new Queen(Tab, Color.Amarela)));
-            addNewParts('e', 8, (new King(Tab, Color.Amarela,this)));
+            addNewParts('e', 8, (new King(Tab, Color.Amarela, this)));
             addNewParts('f', 8, (new Bishop(Tab, Color.Amarela)));
             addNewParts('g', 8, (new Horse(Tab, Color.Amarela)));
             addNewParts('h', 8, (new Tower(Tab, Color.Amarela)));
@@ -286,6 +286,8 @@ namespace JogoXadrez.board {
             addNewParts('f', 7, (new Pawn(Tab, Color.Amarela)));
             addNewParts('g', 7, (new Pawn(Tab, Color.Amarela)));
             addNewParts('h', 7, (new Pawn(Tab, Color.Amarela)));
+
+
 
 
 

@@ -101,7 +101,7 @@ namespace JogoXadrez.Parts {
                     Position p2 = new Position(Position.Line, Position.Column + 2);
 
                     if(Tab.Part(p1) == null && Tab.Part(p2) == null) {
-                        mat[pos.Line, pos.Column + 2] = true;
+                        mat[Position.Line, Position.Column + 2] = true;
                     }
 
                 }
@@ -117,7 +117,7 @@ namespace JogoXadrez.Parts {
 
 
                     if (Tab.Part(p1) == null && Tab.Part(p2) == null && Tab.Part(p3) == null) {
-                        mat[pos.Line, pos.Column - 2] = true;
+                        mat[Position.Line, Position.Column - 2] = true;
                     }
 
                 }
