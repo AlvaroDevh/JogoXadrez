@@ -17,6 +17,7 @@ namespace JogoXadrez.board {
         private HashSet<Part> setParts;
         private HashSet<Part> setCaptureds;
         public bool Check { get; private set; }
+        public Part vunerableEnPassant { get; private set; }
 
 
         public Match() {
@@ -25,6 +26,7 @@ namespace JogoXadrez.board {
             currentePlayer = Color.Branca;
             Finished = false;
             Check = false;
+            vunerableEnPassant = null;
             setParts = new HashSet<Part>();
             setCaptureds = new HashSet<Part>();
             placeParts();
@@ -58,6 +60,25 @@ namespace JogoXadrez.board {
                 Part T = Tab.removePart(oringTower);
                 T.Moviments();
                 Tab.addPart(T, destinyTower);
+            }
+
+            // jogada En Passant 
+
+            if (p is Pawn) {
+                if (origin.Column != destiny.Column && caputredPart == null) {
+                    Position posP;
+
+                    if (p.Color == Color.Branca) {
+                        posP = new Position(destiny.Line + 1, destiny.Column);
+                    }
+                    else {
+                        posP = new Position(destiny.Line - 1, destiny.Column);
+
+                    }
+
+                    caputredPart = Tab.removePart(posP);
+                    setCaptureds.Add(caputredPart);
+                }
             }
 
             return caputredPart;
@@ -99,6 +120,24 @@ namespace JogoXadrez.board {
                 T.decrementMoviments();
                 Tab.addPart(T, oringTower);
             }
+
+            // En Passant 
+
+            if (p is Pawn) {
+                if (origin.Column != destiny.Column && caputredPart == vunerableEnPassant) {
+                    Part pawn = Tab.removePart(destiny);
+                    Position posP;
+
+                    if (p.Color == Color.Branca) {
+                        posP = new Position(3, destiny.Column);
+                    }
+                    else {
+                        posP = new Position(4, destiny.Column);
+
+                    }
+                    Tab.addPart(pawn, posP);
+                }
+            }
         }
 
         public void makePlayer(Position origin, Position destiny) {
@@ -124,6 +163,17 @@ namespace JogoXadrez.board {
             else {
                 Rounds++;
                 changePlayer();
+            }
+
+            Part p = Tab.Part(destiny);
+
+            //# Jogada Especial En Passant
+
+            if (p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2)) {
+                vunerableEnPassant = p;
+            }
+            else {
+                vunerableEnPassant = null;
             }
         }
 
@@ -259,14 +309,14 @@ namespace JogoXadrez.board {
             addNewParts('f', 1, (new Bishop(Tab, Color.Branca)));
             addNewParts('g', 1, (new Horse(Tab, Color.Branca)));
             addNewParts('h', 1, (new Tower(Tab, Color.Branca)));
-            addNewParts('a', 2, (new Pawn(Tab, Color.Branca)));
-            addNewParts('b', 2, (new Pawn(Tab, Color.Branca)));
-            addNewParts('c', 2, (new Pawn(Tab, Color.Branca)));
-            addNewParts('d', 2, (new Pawn(Tab, Color.Branca)));
-            addNewParts('e', 2, (new Pawn(Tab, Color.Branca)));
-            addNewParts('f', 2, (new Pawn(Tab, Color.Branca)));
-            addNewParts('g', 2, (new Pawn(Tab, Color.Branca)));
-            addNewParts('h', 2, (new Pawn(Tab, Color.Branca)));
+            addNewParts('a', 2, (new Pawn(Tab, Color.Branca, this)));
+            addNewParts('b', 2, (new Pawn(Tab, Color.Branca, this)));
+            addNewParts('c', 2, (new Pawn(Tab, Color.Branca, this)));
+            addNewParts('d', 2, (new Pawn(Tab, Color.Branca, this)));
+            addNewParts('e', 2, (new Pawn(Tab, Color.Branca, this)));
+            addNewParts('f', 2, (new Pawn(Tab, Color.Branca, this)));
+            addNewParts('g', 2, (new Pawn(Tab, Color.Branca, this)));
+            addNewParts('h', 2, (new Pawn(Tab, Color.Branca, this)));
 
 
             //preta
@@ -278,14 +328,14 @@ namespace JogoXadrez.board {
             addNewParts('f', 8, (new Bishop(Tab, Color.Amarela)));
             addNewParts('g', 8, (new Horse(Tab, Color.Amarela)));
             addNewParts('h', 8, (new Tower(Tab, Color.Amarela)));
-            addNewParts('a', 7, (new Pawn(Tab, Color.Amarela)));
-            addNewParts('b', 7, (new Pawn(Tab, Color.Amarela)));
-            addNewParts('c', 7, (new Pawn(Tab, Color.Amarela)));
-            addNewParts('d', 7, (new Pawn(Tab, Color.Amarela)));
-            addNewParts('e', 7, (new Pawn(Tab, Color.Amarela)));
-            addNewParts('f', 7, (new Pawn(Tab, Color.Amarela)));
-            addNewParts('g', 7, (new Pawn(Tab, Color.Amarela)));
-            addNewParts('h', 7, (new Pawn(Tab, Color.Amarela)));
+            addNewParts('a', 7, (new Pawn(Tab, Color.Amarela, this)));
+            addNewParts('b', 7, (new Pawn(Tab, Color.Amarela, this)));
+            addNewParts('c', 7, (new Pawn(Tab, Color.Amarela, this)));
+            addNewParts('d', 7, (new Pawn(Tab, Color.Amarela, this)));
+            addNewParts('e', 7, (new Pawn(Tab, Color.Amarela, this)));
+            addNewParts('f', 7, (new Pawn(Tab, Color.Amarela, this)));
+            addNewParts('g', 7, (new Pawn(Tab, Color.Amarela, this)));
+            addNewParts('h', 7, (new Pawn(Tab, Color.Amarela, this)));
 
 
 

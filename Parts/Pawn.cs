@@ -12,9 +12,10 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace JogoXadrez.Parts {
     class Pawn : Part {
 
+        private JogoXadrez.board.Match match;
 
-        public Pawn(Tabuleiro tab, Color cor) : base(tab, cor) {
-
+        public Pawn(Tabuleiro tab, Color cor, JogoXadrez.board.Match match) : base(tab, cor) {
+            this.match = match;
         }
 
         public override string ToString() {
@@ -58,6 +59,22 @@ namespace JogoXadrez.Parts {
                 if (Tab.validPosition(pos) && existOponent(pos)) {
                     mat[pos.Line, pos.Column] = true;
                 }
+
+                //# En Passant 
+
+                if (Position.Line == 3) {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+
+                    if (Tab.validPosition(left) && existOponent(left) && Tab.Part(left) == match.vunerableEnPassant) {
+                        mat[left.Line -1, left.Column] = true;
+                    }
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+
+                    if (Tab.validPosition(right) && existOponent(right) && Tab.Part(right) == match.vunerableEnPassant) {
+                        mat[right.Line - 1, right.Column] = true;
+                    }
+                }
             }
             else {
 
@@ -81,6 +98,22 @@ namespace JogoXadrez.Parts {
                 pos.setValue(Position.Line + 1, Position.Column + 1);
                 if (Tab.validPosition(pos) && existOponent(pos)) {
                     mat[pos.Line, pos.Column] = true;
+                }
+
+                //# En Passant 
+
+                if (Position.Line == 4) {
+                    Position left = new Position(Position.Line, Position.Column + 1);
+
+                    if (Tab.validPosition(left) && existOponent(left) && Tab.Part(left) == match.vunerableEnPassant) {
+                        mat[left.Line +1, left.Column] = true;
+                    }
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+
+                    if (Tab.validPosition(right) && existOponent(right) && Tab.Part(right) == match.vunerableEnPassant) {
+                        mat[right.Line + 1, right.Column] = true;
+                    }
                 }
             }
 
