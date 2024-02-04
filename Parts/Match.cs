@@ -142,10 +142,27 @@ namespace JogoXadrez.board {
 
         public void makePlayer(Position origin, Position destiny) {
             Part caputredPart = Moviment(origin, destiny);
+
             if (isInCheck(currentePlayer)) {
 
                 undoMovement(origin, destiny, caputredPart);
                 throw new TabuleiroException("Jogada Inválida, o rei ficaria em xeque.");
+            }
+            Part p = Tab.Part(destiny);
+
+            // Promoção de peça 
+
+            if( p is Pawn) {
+                if((p.Color == Color.Branca && destiny.Line == 0) || (p.Color == Color.Amarela && destiny.Line == 7)) {
+
+                    p = Tab.removePart(destiny);
+                    setParts.Remove(p);
+
+                    Part dama = new Queen(Tab, p.Color);
+                    Tab.addPart(dama, destiny);
+                    setParts.Add(dama);
+                    
+                }
             }
 
             if (isInCheck(Oponent(currentePlayer))) {
@@ -165,7 +182,6 @@ namespace JogoXadrez.board {
                 changePlayer();
             }
 
-            Part p = Tab.Part(destiny);
 
             //# Jogada Especial En Passant
 
